@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
-type RecipeDifficulty = 'hard' | 'medium' | 'easy'
-type RecipeType = 'dessert'
+export type RecipeDifficulty = 'hard' | 'medium' | 'easy'
+export type RecipeType = 'dessert'
 
 export default class Recipe extends BaseModel {
   @column({ isPrimary: true })
@@ -18,7 +18,7 @@ export default class Recipe extends BaseModel {
   declare name: string
 
   @column()
-  declare duration: string
+  declare duration: number
 
   @column()
   declare link: string

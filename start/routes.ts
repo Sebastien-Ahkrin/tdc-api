@@ -11,4 +11,5 @@ import router from '@adonisjs/core/services/router'
 
 const RecipeController = () => import('#controllers/recipes_controller')
 
-router.get('/', [RecipeController, 'index'])
+router.get('/recipes', [RecipeController, 'index'])
+router.post('/recipe', [RecipeController, 'create'])

@@ -14,7 +14,7 @@ export default class extends BaseSchema {
       table.timestamp('updated_at')
 
       table.string('name')
-      table.string('duration')
+      table.integer('duration')
       table.enum('difficulty', difficulty).nullable()
       table.enum('type', type).nullable()
       table.string('link')
