@@ -6,8 +6,8 @@ import { CreateRecipe, RecipeService } from '#services/recipe_service'
 export default class RecipesController {
   // Get a random recipe
   public async index({ response }: HttpContext) {
-    const recipes = await Recipe.all()
-    return response.ok(recipes)
+    const recipe = await Recipe.query().orderByRaw('RAND()').first()
+    return response.ok(recipe)
   }
 
   public async create({ response, request }: HttpContext) {
