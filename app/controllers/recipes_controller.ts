@@ -1,12 +1,23 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Recipe, { RecipeDifficulty, RecipeType } from '#models/recipe'
-import { createRecipe } from '#validators/create_recipe'
+import { createRecipeValidator } from '#validators/create_recipe'
 import { CreateRecipe, RecipeService } from '#services/recipe_service'
+import { randomRecipeValidator } from '#validators/random_recipe'
 
 export default class RecipesController {
   // Get a random recipe
-  public async index({ response }: HttpContext) {
-    const recipe = await Recipe.query().orderByRaw('RAND()').first()
+  public async index({ response, request }: HttpContext) {
+    const { type } = await request.validateUsing(randomRecipeValidator)
+
+    let result: Recipe[] | null = []
+
+    if (type) {
+      result = await Recipe.query().orderByRaw('RAND()').whereRaw('type = ?', [type])
+    } else {
+      result = await Recipe.query().orderByRaw('RAND()')
+    }
+
+    const recipe = result[0]
 
     if (!recipe) {
       return response.ok('No recipe found')
@@ -21,7 +32,7 @@ export default class RecipesController {
   }
 
   public async create({ response, request }: HttpContext) {
-    const validation = await request.validateUsing(createRecipe)
+    const validation = await request.validateUsing(createRecipeValidator)
     const service = new RecipeService()
 
     const obj: CreateRecipe = {
