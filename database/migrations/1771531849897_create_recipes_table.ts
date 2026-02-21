@@ -1,7 +1,7 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 const difficulty = ['hard', 'medium', 'easy']
-const type = ['dessert']
+const type = ['dessert', 'dish']
 
 export default class extends BaseSchema {
   protected tableName = 'recipes'

@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export type RecipeDifficulty = 'hard' | 'medium' | 'easy'
-export type RecipeType = 'dessert'
+export type RecipeType = 'dessert' | 'dish'
 
 export default class Recipe extends BaseModel {
   @column({ isPrimary: true })
