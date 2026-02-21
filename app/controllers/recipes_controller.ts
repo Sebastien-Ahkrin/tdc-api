@@ -20,7 +20,7 @@ export default class RecipesController {
     const recipe = result[0]
 
     if (!recipe) {
-      return response.ok('No recipe found')
+      return response.ok({ data: 'No recipe found' })
     }
 
     return response.ok(recipe)
