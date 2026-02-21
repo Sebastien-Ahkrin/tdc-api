@@ -7,7 +7,17 @@ export default class RecipesController {
   // Get a random recipe
   public async index({ response }: HttpContext) {
     const recipe = await Recipe.query().orderByRaw('RAND()').first()
+
+    if (!recipe) {
+      return response.ok('No recipe found')
+    }
+
     return response.ok(recipe)
+  }
+
+  public async all({ response }: HttpContext) {
+    const recipes = await Recipe.all()
+    return response.ok(recipes)
   }
 
   public async create({ response, request }: HttpContext) {
