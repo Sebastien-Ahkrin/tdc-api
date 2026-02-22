@@ -9,15 +9,16 @@ export default class RecipesController {
   public async index({ response, request }: HttpContext) {
     const { type } = await request.validateUsing(randomRecipeValidator)
 
-    let result: Recipe[] | null = []
+    let results: Recipe[] | null = []
 
     if (type) {
-      result = await Recipe.query().orderByRaw('RAND()').whereRaw('type = ?', [type])
+      results = await Recipe.query().whereRaw('type = ?', [type])
     } else {
-      result = await Recipe.query().orderByRaw('RAND()')
+      results = await Recipe.all()
     }
 
-    const recipe = result[0]
+    const randomIndex = Math.floor(Math.random() * results.length)
+    const recipe = results[randomIndex]
 
     if (!recipe) {
       return response.ok({ data: 'No recipe found' })
